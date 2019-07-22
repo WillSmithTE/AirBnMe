@@ -10,8 +10,6 @@
     "@types/react-router-dom": "^4.3.4",
     "axios": "^0.19.0",
     "formik": "^1.5.7",
-    "json-schema-faker": "^0.5.0-rc17",
-    "json-server": "^0.15.0",
     "jsonwebtoken": "^8.5.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
@@ -25,9 +23,6 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "start-mockapi": "json-server --watch mockdb/db.json --port 8080",
-    "prestart-mockapi": "node mockdb/generate-data",
-    "start-auth": "node ./mockdb/server.js"
   },
   "eslintConfig": {
     "extends": "react-app"
