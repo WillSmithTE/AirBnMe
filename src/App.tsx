@@ -5,15 +5,16 @@ import { Login } from './Login';
 import { Demo } from './Demo';
 import { Register } from './Register';
 
-const LOGIN_PATH: string = '/login',
-DEMO_PATH: string = '/demo';
+export const LOGIN_PATH: string = '/login',
+DEMO_PATH: string = '/demo',
+HOME_PATH:string = '/'
 
 export const REGISTER_PATH: string = '/register';
 
 export class App extends React.Component {
   render() {
     return <div className="App">
-      <BrowserRouter>
+      <BrowserRouter basename={HOME_PATH}>
           <Link to={LOGIN_PATH}>Login</Link>
           <Link to={DEMO_PATH}>Demo</Link>
 

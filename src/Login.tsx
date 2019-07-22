@@ -1,14 +1,19 @@
 import React from 'react';
 import { Formik, Form, Field } from 'formik';
-import { Link } from 'react-router-dom';
-import { REGISTER_PATH } from './App';
+import axios from 'axios';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { REGISTER_PATH, HOME_PATH } from './App';
+import { LoginRequest, AUTH_API_PATH } from './AuthTypes';
+import { DEFAULT_AXIOS_POST_CONFIG, ACCESS_TOKEN_KEY } from './constants';
 
-export class Login extends React.Component {
+const LOGIN_PATH = AUTH_API_PATH + 'login';
+
+export class Login extends React.Component<RouteComponentProps<{}>> {
     render() {
         return <div>
             <Formik
-            initialValues={{ email: '', password: '' }}
-            onSubmit={(values) => console.error(values)}
+                initialValues={{ email: '', password: '' }}
+                onSubmit={(values) => this.attemptLogin(values)}
             >
                 <Form>
                     <Field type='email' name='email' />
@@ -18,5 +23,15 @@ export class Login extends React.Component {
             </Formik>
             <Link to={REGISTER_PATH}><button>Register</button></Link>
         </div>
+    }
+
+    private attemptLogin(values: LoginRequest): void {
+        axios.post(LOGIN_PATH, values, DEFAULT_AXIOS_POST_CONFIG).then(
+            (success) => {
+                localStorage.setItem(ACCESS_TOKEN_KEY, success.data.access_token);
+                this.props.history.push(HOME_PATH);
+            },
+            (error) => alert('Login failed: ' + JSON.stringify(error, null, 2))
+        );
     }
 }
