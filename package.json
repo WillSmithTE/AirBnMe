@@ -8,6 +8,7 @@
     "@types/react": "^16.8.22",
     "@types/react-dom": "^16.8.4",
     "@types/react-router-dom": "^4.3.4",
+    "@types/yup": "^0.26.22",
     "axios": "^0.19.0",
     "formik": "^1.5.7",
     "jsonwebtoken": "^8.5.1",
@@ -16,13 +17,14 @@
     "react-router": "^5.0.1",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",
-    "typescript": "^3.5.2"
+    "typescript": "^3.5.2",
+    "yup": "^0.27.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": "react-app"

@@ -16,8 +16,8 @@ export class Login extends React.Component<RouteComponentProps<{}>> {
                 onSubmit={(values) => this.attemptLogin(values)}
             >
                 <Form>
-                    <Field type='email' name='email' />
-                    <Field type='password' name='password' />
+                    <Field type='email' name='email' placeholder='email@gmail.com' />
+                    <Field type='password' name='password' placeholder='Password' />
                     <button type='submit'>Login</button>
                 </Form>
             </Formik>

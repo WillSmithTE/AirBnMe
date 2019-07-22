@@ -4,6 +4,7 @@ import './App.css';
 import { Login } from './Login';
 import { Demo } from './Demo';
 import { Register } from './Register';
+import Logo from './logo.png';
 
 export const LOGIN_PATH: string = '/login',
 DEMO_PATH: string = '/demo',
@@ -15,8 +16,9 @@ export class App extends React.Component {
   render() {
     return <div className="App">
       <BrowserRouter basename={HOME_PATH}>
+
+          <Link to={HOME_PATH}><img src={Logo} alt='logo' className='App-logo' /></Link>
           <Link to={LOGIN_PATH}>Login</Link>
-          <Link to={DEMO_PATH}>Demo</Link>
 
           <Route path={LOGIN_PATH} component={Login} />
           <Route path={REGISTER_PATH} component={Register} />
