@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "AirBnMe",
+  "name": "AirBnMe: A place to offer accomodation to me, Will Smith",
   "icons": [
     {
       "src": "favicon.ico",
