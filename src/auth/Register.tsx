@@ -2,11 +2,12 @@ import React from "react";
 import axios from 'axios';
 import { Formik, Form, Field, FormikTouched } from "formik";
 import { RouteComponentProps } from "react-router";
-import { BasicRegisterRequest, AUTH_API_PATH } from "./AuthTypes";
+import * as scrypt from 'scrypt';
+import { RegisterRequest, AUTH_API_PATH } from "./AuthTypes";
 import * as Yup from 'yup';
-import { DEFAULT_AXIOS_POST_CONFIG } from "./constants";
-import { notify } from "./util";
-import { LOGIN_PATH } from "./App";
+import { DEFAULT_AXIOS_POST_CONFIG } from "../constants";
+import { notify } from "../util";
+import { LOGIN_PATH } from "../App";
 
 interface RegisterFields {
     email?: string;
@@ -65,14 +66,20 @@ export class Register extends React.Component<RouteComponentProps<{}>> {
         </div>;
     }
 
-    private attemptRegister(registerRequest: BasicRegisterRequest): void {
-        axios.post(Register.API_PATH, registerRequest, DEFAULT_AXIOS_POST_CONFIG).then(
+    private attemptRegister(registerRequest: RegisterRequest): void {
+        const scryptParams: scrypt.Params = scrypt.paramsSync(5);
+        const hash = scrypt.kdfSync(registerRequest.password, scryptParams);
+        axios.post(
+            Register.API_PATH,
+            { email: registerRequest.email, password: hash, name: registerRequest.name },
+            DEFAULT_AXIOS_POST_CONFIG
+        ).then(
             (_success) => {
                 notify('Registration success!');
                 this.props.history.push(LOGIN_PATH);
             },
             (error) => notify('Registration failed - ' + error)
-        )
+        );
     }
 
     private static maybeShowValidationError<T extends keyof RegisterFields>(fieldName: T, errors: RegisterFields, touched: FormikTouched<RegisterFields>): string | undefined {

@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link, Route, BrowserRouter } from 'react-router-dom';
 import './App.css';
-import { Login } from './Login';
+import { Login } from './auth/Login';
 import { Demo } from './Demo';
-import { Register } from './Register';
+import { Register } from './auth/Register';
 import Logo from './logo.png';
 
 export const LOGIN_PATH: string = '/login',

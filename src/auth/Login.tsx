@@ -2,15 +2,14 @@ import React from 'react';
 import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
 import { Link, RouteComponentProps } from 'react-router-dom';
-import { REGISTER_PATH, HOME_PATH } from './App';
+import { REGISTER_PATH, HOME_PATH } from '../App';
 import { LoginRequest, AUTH_API_PATH } from './AuthTypes';
-import { DEFAULT_AXIOS_POST_CONFIG, ACCESS_TOKEN_KEY } from './constants';
-import { notify } from './util';
+import { DEFAULT_AXIOS_POST_CONFIG, ACCESS_TOKEN_KEY } from '../constants';
+import { notify } from '../util';
 
 export class Login extends React.Component<RouteComponentProps<{}>> {
 
     private static readonly API_PATH = AUTH_API_PATH + 'login';
-
 
     render() {
         return <div>
