@@ -5,10 +5,13 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { REGISTER_PATH, HOME_PATH } from './App';
 import { LoginRequest, AUTH_API_PATH } from './AuthTypes';
 import { DEFAULT_AXIOS_POST_CONFIG, ACCESS_TOKEN_KEY } from './constants';
-
-const LOGIN_PATH = AUTH_API_PATH + 'login';
+import { notify } from './util';
 
 export class Login extends React.Component<RouteComponentProps<{}>> {
+
+    private static readonly API_PATH = AUTH_API_PATH + 'login';
+
+
     render() {
         return <div>
             <Formik
@@ -26,12 +29,12 @@ export class Login extends React.Component<RouteComponentProps<{}>> {
     }
 
     private attemptLogin(values: LoginRequest): void {
-        axios.post(LOGIN_PATH, values, DEFAULT_AXIOS_POST_CONFIG).then(
+        axios.post(Login.API_PATH, values, DEFAULT_AXIOS_POST_CONFIG).then(
             (success) => {
                 localStorage.setItem(ACCESS_TOKEN_KEY, success.data.access_token);
                 this.props.history.push(HOME_PATH);
             },
-            (error) => alert('Login failed: ' + JSON.stringify(error, null, 2))
+            (error) => notify('Login failed - ' + JSON.stringify(error, null, 2))
         );
     }
 }

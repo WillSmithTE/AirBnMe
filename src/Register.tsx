@@ -1,7 +1,12 @@
 import React from "react";
+import axios from 'axios';
 import { Formik, Form, Field, FormikTouched } from "formik";
-import { BasicRegisterRequest } from "./AuthTypes";
+import { RouteComponentProps } from "react-router";
+import { BasicRegisterRequest, AUTH_API_PATH } from "./AuthTypes";
 import * as Yup from 'yup';
+import { DEFAULT_AXIOS_POST_CONFIG } from "./constants";
+import { notify } from "./util";
+import { LOGIN_PATH } from "./App";
 
 interface RegisterFields {
     email?: string;
@@ -10,7 +15,7 @@ interface RegisterFields {
     name?: string;
 }
 
-export class Register extends React.Component {
+export class Register extends React.Component<RouteComponentProps<{}>> {
 
     private static readonly REQURED_MESSAGE = 'Required';
     private static readonly MIN_PASSWORD_LENGTH = 6;
@@ -21,6 +26,7 @@ export class Register extends React.Component {
     private static readonly NAME_FIELD_NAME = 'name';
     private static readonly STRING_FIELD_TYPE = 'string';
     private static readonly MIN_NAME_LENGTH = 1;
+    private static readonly API_PATH = AUTH_API_PATH + 'register';
 
     private static readonly VALIDATION_SCHEMA =
         Yup.object().shape({
@@ -32,7 +38,8 @@ export class Register extends React.Component {
                 .max(Register.MAX_PASSWORD_LENGTH)
                 .required(Register.REQURED_MESSAGE),
             confirmPassword: Yup.string()
-                .oneOf([Yup.ref(Register.PASSWORD_FIELD_NAME)], 'Passwords must match'),
+                .oneOf([Yup.ref(Register.PASSWORD_FIELD_NAME)], 'Passwords must match')
+                .required(Register.REQURED_MESSAGE),
             name: Yup.string()
                 .min(Register.MIN_NAME_LENGTH)
                 .required(Register.REQURED_MESSAGE)
@@ -59,7 +66,13 @@ export class Register extends React.Component {
     }
 
     private attemptRegister(registerRequest: BasicRegisterRequest): void {
-        console.error(registerRequest);
+        axios.post(Register.API_PATH, registerRequest, DEFAULT_AXIOS_POST_CONFIG).then(
+            (_success) => {
+                notify('Registration success!');
+                this.props.history.push(LOGIN_PATH);
+            },
+            (error) => notify('Registration failed - ' + error)
+        )
     }
 
     private static maybeShowValidationError<T extends keyof RegisterFields>(fieldName: T, errors: RegisterFields, touched: FormikTouched<RegisterFields>): string | undefined {
