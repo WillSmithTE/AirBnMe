@@ -2,11 +2,10 @@ import React from "react";
 import axios from 'axios';
 import { Formik, Form, Field, FormikTouched } from "formik";
 import { RouteComponentProps } from "react-router";
-import * as scrypt from 'scrypt';
-import { RegisterRequest, AUTH_API_PATH } from "./AuthTypes";
 import * as Yup from 'yup';
+import { RegisterRequest, AUTH_API_PATH } from "./AuthTypes";
 import { DEFAULT_AXIOS_POST_CONFIG } from "../constants";
-import { notify } from "../util";
+import { notify, hashPassword } from "../util";
 import { LOGIN_PATH } from "../App";
 
 interface RegisterFields {
@@ -67,11 +66,10 @@ export class Register extends React.Component<RouteComponentProps<{}>> {
     }
 
     private attemptRegister(registerRequest: RegisterRequest): void {
-        const scryptParams: scrypt.Params = scrypt.paramsSync(5);
-        const hash = scrypt.kdfSync(registerRequest.password, scryptParams);
+        const password = hashPassword(registerRequest.password);
         axios.post(
             Register.API_PATH,
-            { email: registerRequest.email, password: hash, name: registerRequest.name },
+            { email: registerRequest.email, password, name: registerRequest.name },
             DEFAULT_AXIOS_POST_CONFIG
         ).then(
             (_success) => {
@@ -97,9 +95,8 @@ export class Register extends React.Component<RouteComponentProps<{}>> {
         fieldType: string = fieldName): JSX.Element {
 
         return <div>
-            <Field type={fieldType} name={fieldName} placeholder={placeholder} />
+            < Field type={fieldType} name={fieldName} placeholder={placeholder} />
             {Register.maybeShowValidationError(fieldName, errors, touched)}
-        </div>;
+        </div >;
     }
-
 }

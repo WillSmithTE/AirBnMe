@@ -5,7 +5,7 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { REGISTER_PATH, HOME_PATH } from '../App';
 import { LoginRequest, AUTH_API_PATH } from './AuthTypes';
 import { DEFAULT_AXIOS_POST_CONFIG, ACCESS_TOKEN_KEY } from '../constants';
-import { notify } from '../util';
+import { notify, hashPassword } from '../util';
 
 export class Login extends React.Component<RouteComponentProps<{}>> {
 
@@ -27,13 +27,18 @@ export class Login extends React.Component<RouteComponentProps<{}>> {
         </div>
     }
 
-    private attemptLogin(values: LoginRequest): void {
-        axios.post(Login.API_PATH, values, DEFAULT_AXIOS_POST_CONFIG).then(
+    private attemptLogin(loginRequest: LoginRequest): void {
+        const password = hashPassword(loginRequest.password);
+        axios.post(
+            Login.API_PATH,
+            { email: loginRequest.email, password },
+            DEFAULT_AXIOS_POST_CONFIG
+        ).then(
             (success) => {
                 localStorage.setItem(ACCESS_TOKEN_KEY, success.data.access_token);
                 this.props.history.push(HOME_PATH);
             },
             (error) => notify('Login failed - ' + JSON.stringify(error, null, 2))
-        );
+        )
     }
 }
