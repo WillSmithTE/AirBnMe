@@ -2,10 +2,10 @@ import React from 'react';
 import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
 import { Link, RouteComponentProps } from 'react-router-dom';
-import { REGISTER_PATH, HOME_PATH } from '../App';
+import { REGISTER_PATH, HOME_PATH } from '../app/App';
 import { LoginRequest, AUTH_API_PATH } from './AuthTypes';
-import { DEFAULT_AXIOS_POST_CONFIG, ACCESS_TOKEN_KEY } from '../constants';
-import { notify, hashPassword } from '../util';
+import { DEFAULT_AXIOS_POST_CONFIG, ACCESS_TOKEN_KEY } from '../util/constants';
+import { notify, hashPassword } from '../util/util';
 
 export class Login extends React.Component<RouteComponentProps<{}>> {
 

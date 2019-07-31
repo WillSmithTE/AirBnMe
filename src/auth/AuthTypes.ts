@@ -1,4 +1,4 @@
-import { SERVER_API_PATH } from "../constants";
+import { SERVER_API_PATH } from "../util/constants";
 
 export const AUTH_API_PATH = SERVER_API_PATH + 'auth/';
 
@@ -10,3 +10,4 @@ export interface LoginRequest {
 export interface RegisterRequest extends LoginRequest {
     readonly name: string;
 }
+ 
