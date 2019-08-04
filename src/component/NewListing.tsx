@@ -5,7 +5,7 @@ import { REQUIRED_TEXT, NAME_FIELD_NAME, STRING_FIELD_TYPE, DESCRIPTION_FIELD_NA
 import { Listing, LISTINGS_API_PATH, LISTINGS_PATH } from '../model/Listing';
 import { makeFieldAndErrors, makeTextAreaFieldAndErrors, notifyError, axiosErrorToMessage } from '../util/util';
 import { RouteComponentProps } from 'react-router';
-import { postWithAuthToken } from '../auth/AuthTypes';
+import { postWithAuthToken } from '../model/AuthTypes';
 
 export class NewListing extends React.Component<RouteComponentProps<{}>> {
 
@@ -31,8 +31,7 @@ export class NewListing extends React.Component<RouteComponentProps<{}>> {
             <Formik
                 initialValues={{ name: '', address: '', description: '' }}
                 onSubmit={(values) => this.attemptCreateNewListing(values as any)}
-                validationSchema={NewListing.VALIDATION_SCHEMA}
-            >
+                validationSchema={NewListing.VALIDATION_SCHEMA} >
                 {({ errors, touched }) =>
                     <Form>
                         {makeFieldAndErrors(NAME_FIELD_NAME, errors, touched, 'The Palace', STRING_FIELD_TYPE)}
@@ -45,7 +44,7 @@ export class NewListing extends React.Component<RouteComponentProps<{}>> {
         </div >;
     }
 
-    private attemptCreateNewListing(listing: Listing): void { 
+    private attemptCreateNewListing(listing: Listing): void {
         postWithAuthToken(NewListing.API_PATH, listing).then(
             (success) => this.props.history.push(`${LISTINGS_PATH}/${success.data.listingId}`),
             (error) => notifyError(axiosErrorToMessage(error))

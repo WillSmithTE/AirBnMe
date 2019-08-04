@@ -3,7 +3,7 @@ import axios, { AxiosError } from 'axios';
 import { Formik, Form } from "formik";
 import { RouteComponentProps } from "react-router";
 import * as Yup from 'yup';
-import { RegisterRequest, AUTH_API_PATH } from "../auth/AuthTypes";
+import { RegisterRequest, AUTH_API_PATH } from "../model/AuthTypes";
 import { DEFAULT_AXIOS_POST_CONFIG, REQUIRED_TEXT, PASSWORD_FIELD_NAME, EMAIL_FIELD_NAME, CONFIRM_PASSWORD_FIELD_NAME, NAME_FIELD_NAME, STRING_FIELD_TYPE } from "../util/constants";
 import { notify, hashPassword, makeFieldAndErrors, axiosErrorToMessage } from "../util/util";
 import { LOGIN_PATH } from "./App";

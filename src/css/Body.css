@@ -1,0 +1,10 @@
+.bottomStrip{
+    text-align:center;
+    position:fixed;
+    padding-top: 10px;
+    bottom: 0px;
+    font-weight:bold;
+    color:RGB(48,55,63);
+    width: 100%;
+  }
+  

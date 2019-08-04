@@ -3,7 +3,7 @@ import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { REGISTER_PATH, HOME_PATH } from './App';
-import { LoginRequest, AUTH_API_PATH } from '../auth/AuthTypes';
+import { LoginRequest, AUTH_API_PATH } from '../model/AuthTypes';
 import { DEFAULT_AXIOS_POST_CONFIG, ACCESS_TOKEN_KEY } from '../util/constants';
 import { notify, hashPassword, axiosErrorToMessage } from '../util/util';
 
