@@ -9,7 +9,9 @@ export const LOGIN_PATH: string = '/login',
   HOME_PATH: string = '/',
   ABOUT_PATH: string = '/about',
   CREATE_LISTING_PATH: string = '/create-listing',
-  REGISTER_PATH: string = '/register';
+  REGISTER_PATH: string = '/register',
+  LISTING_PATH: string = '/places',
+  USER_ID_PATH = '/:listingId';
 
 export class App extends React.Component {
 

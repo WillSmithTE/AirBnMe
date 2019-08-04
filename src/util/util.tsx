@@ -4,6 +4,7 @@ import { FormikTouched, Field } from 'formik';
 import { TEXTAREA_FIELD_TYPE } from './constants';
 import { AxiosError } from 'axios';
 import { isUndefined } from 'util';
+import '../css/App.css';
 
 export function isNonEmptyString(value: any): boolean {
     return typeof value === 'string' &&
@@ -39,7 +40,7 @@ export function makeFieldAndErrors<S, T extends keyof S>(
     fieldType: string = fieldName as string
 ): JSX.Element {
 
-    return <div>
+    return <div className='input-field'>
         <Field type={fieldType} name={fieldName} placeholder={placeholder} />
         {maybeShowValidationError(fieldName, errors, touched)}
     </div >;

@@ -17,5 +17,6 @@ export const PASSWORD_FIELD_NAME = 'password',
     NAME_FIELD_NAME = 'name',
     ADDRESS_FIELD_NAME = 'address',
     DESCRIPTION_FIELD_NAME = 'description',
+    PRICE_FIELD_NAME = 'price',
     STRING_FIELD_TYPE = 'string',
     TEXTAREA_FIELD_TYPE = 'textarea';

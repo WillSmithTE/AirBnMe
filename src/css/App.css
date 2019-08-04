@@ -34,7 +34,8 @@
   }
 }
 
-.navItem {
-  margin: 4px;
-  font-size: 30px;
+.input-field {
+  display: block;
+  margin: auto;
+  margin-bottom: 5px;
 }

@@ -6,6 +6,7 @@ import { REGISTER_PATH, HOME_PATH } from './App';
 import { LoginRequest, AUTH_API_PATH } from '../model/AuthTypes';
 import { DEFAULT_AXIOS_POST_CONFIG, ACCESS_TOKEN_KEY } from '../util/constants';
 import { notify, hashPassword, axiosErrorToMessage } from '../util/util';
+import '../css/App.css';
 
 export class Login extends React.Component<RouteComponentProps<{}>> {
 
@@ -13,16 +14,18 @@ export class Login extends React.Component<RouteComponentProps<{}>> {
 
     render() {
         return <div>
+            <h3>Login</h3>
             <Formik
                 initialValues={{ email: '', password: '' }}
                 onSubmit={(values) => this.attemptLogin(values)} >
                 <Form>
-                    <Field type='email' name='email' placeholder='email@gmail.com' />
-                    <Field type='password' name='password' placeholder='Password' />
-                    <button type='submit'>Login</button>
+                    <Field type='email' name='email' placeholder='email@gmail.com' className='input-field' />
+                    <Field type='password' name='password' placeholder='Password' className='input-field' />
+                    <button type='submit' className='input-field'>Login</button>
                 </Form>
             </Formik>
-            <Link to={REGISTER_PATH}><button>Register</button></Link>
+            <h6 style={ { paddingTop: '12px' }}>New to AirbnMe?</h6>
+            <Link to={REGISTER_PATH}><button>Create an account</button></Link>
         </div>
     }
 
