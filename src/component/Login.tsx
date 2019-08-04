@@ -2,10 +2,10 @@ import React from 'react';
 import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
 import { Link, RouteComponentProps } from 'react-router-dom';
-import { REGISTER_PATH, HOME_PATH } from '../app/App';
-import { LoginRequest, AUTH_API_PATH } from './AuthTypes';
+import { REGISTER_PATH, HOME_PATH } from './App';
+import { LoginRequest, AUTH_API_PATH } from '../auth/AuthTypes';
 import { DEFAULT_AXIOS_POST_CONFIG, ACCESS_TOKEN_KEY } from '../util/constants';
-import { notify, hashPassword } from '../util/util';
+import { notify, hashPassword, axiosErrorToMessage } from '../util/util';
 
 export class Login extends React.Component<RouteComponentProps<{}>> {
 
@@ -15,8 +15,7 @@ export class Login extends React.Component<RouteComponentProps<{}>> {
         return <div>
             <Formik
                 initialValues={{ email: '', password: '' }}
-                onSubmit={(values) => this.attemptLogin(values)}
-            >
+                onSubmit={(values) => this.attemptLogin(values)} >
                 <Form>
                     <Field type='email' name='email' placeholder='email@gmail.com' />
                     <Field type='password' name='password' placeholder='Password' />
@@ -36,9 +35,9 @@ export class Login extends React.Component<RouteComponentProps<{}>> {
         ).then(
             (success) => {
                 localStorage.setItem(ACCESS_TOKEN_KEY, success.data.access_token);
-                this.props.history.push(HOME_PATH);
+                this.props.history.push(HOME_PATH, { userId: success.data.userId });
             },
-            (error) => notify('Login failed - ' + JSON.stringify(error, null, 2))
+            (error) => notify('Login failed - ' + axiosErrorToMessage(error))
         )
     }
 }

@@ -2,6 +2,8 @@ import * as hash from 'hash.js';
 import * as React from 'react';
 import { FormikTouched, Field } from 'formik';
 import { TEXTAREA_FIELD_TYPE } from './constants';
+import { AxiosError } from 'axios';
+import { isUndefined } from 'util';
 
 export function isNonEmptyString(value: any): boolean {
     return typeof value === 'string' &&
@@ -9,7 +11,15 @@ export function isNonEmptyString(value: any): boolean {
         value !== undefined;
 }
 
-export function notify(message: string): void {
+export function axiosErrorToMessage(error: AxiosError): string {
+    if (isUndefined(error.response)) {
+        return error.message;
+    } else {
+        return error.response.data.message;
+    }
+}
+
+export function notify(message: any): void {
     alert(message);
 }
 
@@ -53,4 +63,3 @@ function maybeShowValidationError<S, T extends keyof S>(fieldName: T, errors: S,
         errors[fieldName] :
         undefined;
 }
-

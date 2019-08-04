@@ -1,12 +1,12 @@
 import React from "react";
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { Formik, Form } from "formik";
 import { RouteComponentProps } from "react-router";
 import * as Yup from 'yup';
-import { RegisterRequest, AUTH_API_PATH } from "./AuthTypes";
+import { RegisterRequest, AUTH_API_PATH } from "../auth/AuthTypes";
 import { DEFAULT_AXIOS_POST_CONFIG, REQUIRED_TEXT, PASSWORD_FIELD_NAME, EMAIL_FIELD_NAME, CONFIRM_PASSWORD_FIELD_NAME, NAME_FIELD_NAME, STRING_FIELD_TYPE } from "../util/constants";
-import { notify, hashPassword, makeFieldAndErrors } from "../util/util";
-import { LOGIN_PATH } from "../app/App";
+import { notify, hashPassword, makeFieldAndErrors, axiosErrorToMessage } from "../util/util";
+import { LOGIN_PATH } from "./App";
 
 interface RegisterFields {
     email?: string;
@@ -70,7 +70,7 @@ export class Register extends React.Component<RouteComponentProps<{}>> {
                 notify('Registration success!');
                 this.props.history.push(LOGIN_PATH);
             },
-            (error) => notify('Registration failed - ' + error)
+            (error: AxiosError) => notify('Registration failed - ' + axiosErrorToMessage(error))
         );
     }
 

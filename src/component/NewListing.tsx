@@ -2,13 +2,16 @@ import * as React from 'react';
 import * as Yup from 'yup';
 import { Formik, Form } from 'formik';
 import { REQUIRED_TEXT, NAME_FIELD_NAME, STRING_FIELD_TYPE, DESCRIPTION_FIELD_NAME, ADDRESS_FIELD_NAME } from '../util/constants';
-import { Listing } from './Listing';
-import { makeFieldAndErrors, makeTextAreaFieldAndErrors } from '../util/util';
+import { Listing, LISTINGS_API_PATH, LISTINGS_PATH } from '../model/Listing';
+import { makeFieldAndErrors, makeTextAreaFieldAndErrors, notifyError, axiosErrorToMessage } from '../util/util';
+import { RouteComponentProps } from 'react-router';
+import { postWithAuthToken } from '../auth/AuthTypes';
 
-export class NewListing extends React.Component {
+export class NewListing extends React.Component<RouteComponentProps<{}>> {
 
     private static readonly MIN_NAME_LENGTH: number = 2;
     private static readonly MIN_DESCRIPTION_LENGTH: number = 10;
+    private static readonly API_PATH: string = LISTINGS_API_PATH + 'new';
 
     private static readonly VALIDATION_SCHEMA = Yup.object().shape({
         name: Yup.string()
@@ -42,7 +45,10 @@ export class NewListing extends React.Component {
         </div >;
     }
 
-    private attemptCreateNewListing(listing: Listing): void {
-
+    private attemptCreateNewListing(listing: Listing): void { 
+        postWithAuthToken(NewListing.API_PATH, listing).then(
+            (success) => this.props.history.push(`${LISTINGS_PATH}/${success.data.listingId}`),
+            (error) => notifyError(axiosErrorToMessage(error))
+        );
     }
 }

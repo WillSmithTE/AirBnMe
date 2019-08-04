@@ -1,5 +1,5 @@
 import * as React from "react";
-import { TextLink } from "../util/TextLink";
+import { TextLink } from "../component/TextLink";
 
 export class About extends React.Component {
     render(): JSX.Element {
