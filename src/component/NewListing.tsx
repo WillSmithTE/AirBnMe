@@ -7,6 +7,7 @@ import { makeFieldAndErrors, makeTextAreaFieldAndErrors, notifyError, axiosError
 import { RouteComponentProps } from 'react-router';
 import { postWithAuthToken } from '../model/AuthTypes';
 import { LISTING_PATH } from './App';
+import { DatePicker } from './DatePicker';
 
 export class NewListing extends React.Component<RouteComponentProps<{}>> {
 
@@ -45,6 +46,7 @@ export class NewListing extends React.Component<RouteComponentProps<{}>> {
                     </Form>
                 }
             </Formik>
+            <DatePicker />
         </div >;
     }
 
