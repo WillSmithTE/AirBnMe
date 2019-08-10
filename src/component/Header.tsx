@@ -13,8 +13,9 @@ export class Header extends React.Component {
             <Navbar color='faded' light expand='md'>
                 <Link to={HOME_PATH}><img src={Logo} alt='logo' className='App-logo' /></Link>
                 <Nav navbar>
-                    <NavItem><NavLink to={ABOUT_PATH}>About</NavLink></NavItem>
+                    <NavItem><NavLink to={HOME_PATH}>Home</NavLink></NavItem>
                     <NavItem><NavLink to={CREATE_LISTING_PATH}>Create a listing</NavLink></NavItem>
+                    <NavItem><NavLink to={ABOUT_PATH}>About</NavLink></NavItem>
                     <NavItem>{this.loginOrAccountLink()}</NavItem>
                 </Nav>
             </Navbar>

@@ -1,14 +1,9 @@
+import 'react-dates/initialize';
+import 'react-dates/lib/css/_datepicker.css';
+import '../css/DatePicker.css';
 import React from "react";
-import { DateRange } from 'moment-range';
-import DateRangePicker from 'react-daterange-picker';
-import originalMoment from "moment";
-import { extendMoment } from "moment-range";
-const moment = extendMoment(originalMoment());
-
-interface DatePickerState {
-    value: DateRange | undefined;
-    isOpen: boolean;
-}
+import { DateRangePicker } from 'react-dates';
+import moment from 'moment';
 
 export class DatePicker extends React.Component<{}, any> {
 
@@ -24,69 +19,20 @@ export class DatePicker extends React.Component<{}, any> {
         }
     };
 
-    constructor(props: {}) {
-        super(props);
-
-        const today = moment();
-
-        this.state = {
-            value: moment.range(today.clone().subtract(7, 'days'), today.clone()),
-            isOpen: false
-        };
-    }
+    // constructor(props: {}) {
+    //     super(props);
+    // }
 
     render(): JSX.Element {
         return <DateRangePicker
-        value={this.state.value}
-        onSelect={((value: any, states: any) => this.onSelect(value, states)) as any}
-        onClick={() => this.onToggle()} as any
+        startDate={moment()}
+        startDateId='date_from'
+        endDate={moment().add(7, 'days')}
+        endDateId='herp'
+        onDatesChange={(derp) => console.error(derp) }
+        focusedInput={'startDate'}
+        onFocusChange={(input) => console.error(input)}
         />;
-    }
-
-    {
-        "numberOfCalendars": 2,
-        "selectionType": "range",
-        "singleDateRange": true,
-        "minimumDate": {},
-        "onSelect": "[function bound handleSelect]",
-        "value": {},
-        "bemNamespace": null,
-        "bemBlock": "DateRangePicker",
-        "className": "",
-        "firstOfWeek": 0,
-        "disableNavigation": false,
-        "nextLabel": "",
-        "previousLabel": "",
-        "initialDate": {},
-        "initialFromValue": true,
-        "locale": "en",
-        "stateDefinitions": {
-          "__default": {}
-        },
-        "selectedLabel": "Your selected dates",
-        "defaultState": "__default",
-        "dateStates": [],
-        "showLegend": false,
-        "paginationArrowComponent": "[function ]"
-      }
-    private renderSelectionValue = () => {
-        return (
-            <div>
-                <div>Selection</div>
-                {this.state.value.start.format("YYYY-MM-DD")}
-                {" - "}
-                {this.state.value.end.format("YYYY-MM-DD")}
-            </div>
-        );
-    };
-
-    private onToggle = () => {
-        this.setState({ isOpen: !this.state.isOpen });
-    }
-
-    private onSelect = (value: any, states: any) => {
-        this.setState({ value, states });
-        console.error(this.state);
     }
 
 }
