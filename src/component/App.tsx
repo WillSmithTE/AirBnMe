@@ -13,16 +13,20 @@ export const LOGIN_PATH: string = '/login',
   LISTING_PATH: string = '/places',
   USER_ID_PATH = '/:listingId';
 
+export const listingPathGenerator= (listingId: string) => {
+  return `${LISTING_PATH}/${listingId}`;
+}
+
 export class App extends React.Component {
 
   render() {
     return <div className="App">
-      <BrowserRouter basename={HOME_PATH}>
+      <BrowserRouter >
 
         <Header />
         <Body />
 
-      </BrowserRouter>
+      </BrowserRouter >
     </div>;
   }
 }

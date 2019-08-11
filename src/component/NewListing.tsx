@@ -8,6 +8,7 @@ import { RouteComponentProps } from 'react-router';
 import { postWithAuthToken } from '../model/AuthTypes';
 import { LISTING_PATH } from './App';
 
+
 export class NewListing extends React.Component<RouteComponentProps<{}>> {
 
     private static readonly MIN_NAME_LENGTH: number = 2;
@@ -53,5 +54,9 @@ export class NewListing extends React.Component<RouteComponentProps<{}>> {
             (success) => this.props.history.push(`${LISTING_PATH}/${success.data.listingId}`),
             (error) => notifyError(axiosErrorToMessage(error))
         );
+    }
+
+    private setRanges(ranges: any[]): void {
+        this.setState({ ranges });
     }
 }
