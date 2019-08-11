@@ -57,7 +57,6 @@ export class SimpleListingModel implements ListingModel {
     }
 
     public static createFromRaw(listing: any): SimpleListingModel | undefined {
-        console.error(listing);
         if (
             isNullOrUndefined(listing.id) ||
             isNullOrUndefined(listing.name) ||

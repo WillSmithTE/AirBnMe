@@ -7,7 +7,7 @@ import { makeFieldAndErrors, makeTextAreaFieldAndErrors, notifyError, axiosError
 import { RouteComponentProps } from 'react-router';
 import { postWithAuthToken } from '../model/AuthTypes';
 import { LISTING_PATH } from './App';
-import { DatePicker } from './DatePicker';
+
 
 export class NewListing extends React.Component<RouteComponentProps<{}>> {
 
@@ -46,7 +46,6 @@ export class NewListing extends React.Component<RouteComponentProps<{}>> {
                     </Form>
                 }
             </Formik>
-            <DatePicker />
         </div >;
     }
 
@@ -55,5 +54,9 @@ export class NewListing extends React.Component<RouteComponentProps<{}>> {
             (success) => this.props.history.push(`${LISTING_PATH}/${success.data.listingId}`),
             (error) => notifyError(axiosErrorToMessage(error))
         );
+    }
+
+    private setRanges(ranges: any[]): void {
+        this.setState({ ranges });
     }
 }
