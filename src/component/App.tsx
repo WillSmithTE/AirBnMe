@@ -3,6 +3,8 @@ import { BrowserRouter } from 'react-router-dom';
 import '../css/App.css';
 import { Header } from './Header';
 import { Body } from './Body';
+import { AuthService } from '../services/AuthService';
+import { noop } from '@babel/types';
 
 export const LOGIN_PATH: string = '/login',
   DEMO_PATH: string = '/demo',
@@ -11,22 +13,45 @@ export const LOGIN_PATH: string = '/login',
   CREATE_LISTING_PATH: string = '/create-listing',
   REGISTER_PATH: string = '/register',
   LISTING_PATH: string = '/places',
-  USER_ID_PATH = '/:listingId';
+  LISTING_ID_PATH = '/:listingId',
+  ACCOUNT_PATH = '/user',
+  USER_ID_PATH = '/:userId';
 
-export const listingPathGenerator= (listingId: string) => {
+export const listingPathGenerator = (listingId: string) => {
   return `${LISTING_PATH}/${listingId}`;
 }
 
-export class App extends React.Component {
+export interface AppState {
+  userId: number | undefined;
+}
+
+export class App extends React.Component<{}, AppState> {
+
+  constructor(props: {}) {
+    super(props);
+    this.state = { userId: undefined }
+  }
+
+  componentDidMount(): void {
+    AuthService.getUserIdFromAuthToken().then(
+      (userId) => this.setState({ userId }),
+      (_error) => noop
+    );
+
+  }
 
   render() {
     return <div className="App">
       <BrowserRouter >
 
-        <Header />
-        <Body />
+        <Header userId={this.state.userId} />
+        <Body userId={this.state.userId} setUserId={(userId: number) => this.setUserId(userId)} />
 
       </BrowserRouter >
     </div>;
+  }
+
+  private setUserId(userId: number): void {
+    this.setState({ userId });
   }
 }

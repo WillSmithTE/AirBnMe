@@ -11,6 +11,7 @@ export class About extends React.Component {
              <p style={ { fontSize: '6pt' }}>(how bout that spinning logo tho)</p>
             <TextLink url='https://www.linkedin.com/in/willsmithte/' text='My LinkedIn' />
             <TextLink url='https://github.com/WillSmithTE/' text='My GitHub' />
+            <TextLink url='https://github.com/WillSmithTE/AirBnMe' text='The Codes' />
         </div>;
     }
 }

@@ -12,7 +12,7 @@ interface ListingSummaryProps {
 
 export class ListingSummary extends React.Component<ListingSummaryProps> {
     render(): JSX.Element {
-        return <Row xs={3}>
+        return <Row>
             <Col xs={4}>
                 <Link to={listingPathGenerator(String(this.props.listing.getId()))}>
                     <img className='listingImg' src={this.props.listing.getImgUrl()} alt={`${this.props.listing.getName()} listing`} />

@@ -6,6 +6,8 @@ import { AxiosError } from 'axios';
 import { isUndefined } from 'util';
 import '../css/App.css';
 
+const HEX = 'hex';
+
 export function isNonEmptyString(value: any): boolean {
     return typeof value === 'string' &&
         value !== null &&
@@ -29,7 +31,8 @@ export function notifyError(message: string): void {
 }
 
 export function hashPassword(unhashed: string): string {
-    return hash.sha384().update(hash.sha384().update(unhashed)).digest('hex');
+    const hashedOnce: string = hash.sha384().update(unhashed).digest(HEX);
+    return hash.sha384().update(hashedOnce + unhashed).digest(HEX);
 }
 
 export function makeFieldAndErrors<S, T extends keyof S>(

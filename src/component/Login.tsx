@@ -1,14 +1,15 @@
 import React from 'react';
 import { Formik, Form, Field } from 'formik';
 import axios from 'axios';
-import { Link, RouteComponentProps } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { REGISTER_PATH, HOME_PATH } from './App';
 import { LoginRequest, AUTH_API_PATH } from '../model/AuthTypes';
 import { DEFAULT_AXIOS_POST_CONFIG, ACCESS_TOKEN_KEY } from '../util/constants';
 import { notify, hashPassword, axiosErrorToMessage } from '../util/util';
 import '../css/App.css';
+import { BodyRouterProps } from './Body';
 
-export class Login extends React.Component<RouteComponentProps<{}>> {
+export class Login extends React.Component<BodyRouterProps> {
 
     private static readonly API_PATH = AUTH_API_PATH + 'login';
 
@@ -26,7 +27,7 @@ export class Login extends React.Component<RouteComponentProps<{}>> {
             </Formik>
             <h6 style={ { paddingTop: '12px' }}>New to AirbnMe?</h6>
             <Link to={REGISTER_PATH}><button>Create an account</button></Link>
-        </div>
+        </div>;
     }
 
     private attemptLogin(loginRequest: LoginRequest): void {
@@ -37,10 +38,11 @@ export class Login extends React.Component<RouteComponentProps<{}>> {
             DEFAULT_AXIOS_POST_CONFIG
         ).then(
             (success) => {
-                localStorage.setItem(ACCESS_TOKEN_KEY, success.data.access_token);
-                this.props.history.push(HOME_PATH, { userId: success.data.userId });
+                localStorage.setItem(ACCESS_TOKEN_KEY, success.data.accessToken);
+                this.props.setUserId(success.data.userId)
+                this.props.history.push(HOME_PATH);
             },
             (error) => notify('Login failed - ' + axiosErrorToMessage(error))
-        )
+        );
     }
 }
