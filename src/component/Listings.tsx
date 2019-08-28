@@ -27,10 +27,17 @@ export class Listings extends React.Component<ListingsProps, ListingsState> {
     constructor(props: ListingsProps) {
         super(props);
         this.state = { listings: [], pageNumber: 1 };
+        this.updateListingSummaries();
+    }
+
+    componentDidUpdate(prevProps: ListingsProps, prevState: ListingsState) {
+        if (prevProps.searchTerm !== this.props.searchTerm ||
+            prevState.pageNumber !== this.state.pageNumber) {
+            this.updateListingSummaries();
+        }
     }
 
     render(): JSX.Element {
-        this.updateListingSummaries();
         return <Container className='listingsContainer'>
             {this.state.listings.map((listing) => <ListingSummary listing={listing} key={listing.getId()} />)}
         </Container>;
