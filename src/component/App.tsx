@@ -21,8 +21,13 @@ export const listingPathGenerator = (listingId: string) => {
   return `${LISTING_PATH}/${listingId}`;
 }
 
+
 export interface AppState {
   userId: number | undefined;
+}
+
+export interface AppStateWithSetUserId extends AppState {
+  setUserId: (userId: number | undefined) => void;
 }
 
 export class App extends React.Component<{}, AppState> {
@@ -44,14 +49,14 @@ export class App extends React.Component<{}, AppState> {
     return <div className="App">
       <BrowserRouter >
 
-        <Header userId={this.state.userId} />
-        <Body userId={this.state.userId} setUserId={(userId: number) => this.setUserId(userId)} />
+        <Header userId={this.state.userId} setUserId={(userId: number | undefined) => this.setUserId(userId)} />
+        <Body userId={this.state.userId} setUserId={(userId: number | undefined) => this.setUserId(userId)} />
 
       </BrowserRouter >
     </div>;
   }
 
-  private setUserId(userId: number): void {
+  private setUserId(userId: number | undefined): void {
     this.setState({ userId });
   }
 }

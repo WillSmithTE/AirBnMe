@@ -5,9 +5,9 @@ import { Navbar, Nav, NavItem } from 'reactstrap';
 import Logo from '../assets/logo.png';
 import '../css/Header.css';
 import { AuthService } from '../services/AuthService';
-import { HOME_PATH, LOGIN_PATH, ABOUT_PATH, CREATE_LISTING_PATH, AppState, ACCOUNT_PATH } from './App';
+import { HOME_PATH, LOGIN_PATH, ABOUT_PATH, CREATE_LISTING_PATH, ACCOUNT_PATH, AppStateWithSetUserId } from './App';
 
-export class Header extends React.Component<AppState> {
+export class Header extends React.Component<AppStateWithSetUserId> {
 
     render(): JSX.Element {
         return <div>
@@ -26,13 +26,15 @@ export class Header extends React.Component<AppState> {
     private loginOrAccountLink(): JSX.Element {
         if (AuthService.isLoggedIn(this.props.userId)) {
             return <><NavItem><NavLink to={`${ACCOUNT_PATH}/${this.props.userId}`}>Account</NavLink></NavItem>
-                <button onClick={() => this.logout()}>Logout</button></>;
+                <button onClick={() => this.onLogoutClick()}>Logout</button></>;
         } else {
             return <NavItem><NavLink to={LOGIN_PATH}>Login</NavLink></NavItem>;
         }
     }
 
-    private logout(): void {
-        alert(`Haha this hasn't been implemented yet 8) `)
+    private onLogoutClick(): void {
+        if (window.confirm(`Are you sure you want to logout?`)) {
+            AuthService.logout(() => this.props.setUserId(undefined));
+        }
     }
 }

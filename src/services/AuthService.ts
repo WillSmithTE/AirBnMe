@@ -23,4 +23,9 @@ export class AuthService {
         return !isUndefined(userId);
     }
 
+    public static logout(callback: () => void): void {
+        localStorage.removeItem(ACCESS_TOKEN_KEY);
+        callback();
+    }
+
 }

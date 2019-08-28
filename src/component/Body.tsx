@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Route, RouteComponentProps } from 'react-router';
-import { LOGIN_PATH, REGISTER_PATH, DEMO_PATH, ABOUT_PATH, CREATE_LISTING_PATH, LISTING_PATH, LISTING_ID_PATH, HOME_PATH, ACCOUNT_PATH, USER_ID_PATH, AppState } from './App';
+import { LOGIN_PATH, REGISTER_PATH, DEMO_PATH, ABOUT_PATH, CREATE_LISTING_PATH, LISTING_PATH, LISTING_ID_PATH, HOME_PATH, ACCOUNT_PATH, USER_ID_PATH, AppStateWithSetUserId } from './App';
 import { Login } from './Login';
 import { Register } from './Register';
 import { Demo } from '../demo/Demo';
@@ -11,16 +11,11 @@ import { Listing } from './Listing';
 import { Home } from './Home';
 import { Account } from './Account';
 
-
-interface BodyProps extends AppState {
-    setUserId: (userId: number) => void;
-}
-
-export interface BodyRouterProps extends BodyProps, RouteComponentProps {
+export interface BodyRouterProps extends AppStateWithSetUserId, RouteComponentProps {
 
 }
 
-export class Body extends React.Component<BodyProps> {
+export class Body extends React.Component<AppStateWithSetUserId> {
 
     render(): JSX.Element {
         return <div>

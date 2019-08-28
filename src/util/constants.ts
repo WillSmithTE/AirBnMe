@@ -1,5 +1,5 @@
-export const SERVER_API_PATH = 'https://airbnme-jsonbe.herokuapp.com/';
-// export const SERVER_API_PATH = 'http://localhost:8080/';
+// export const SERVER_API_PATH = 'https://airbnme-jsonbe.herokuapp.com/';
+export const SERVER_API_PATH = 'http://localhost:8080/';
 
 export const DEFAULT_AXIOS_POST_CONFIG = {
     headers: {
