@@ -15,8 +15,12 @@ export class Home extends React.Component<{}, HomeState> {
 
     render(): JSX.Element {
         return <div>
-            <SearchBar />
+            <SearchBar setSearchTerm={(searchTerm: string) => this.setSearchTerm(searchTerm)} />
             <Listings searchTerm={this.state.searchTerm} />
         </div>;
+    }
+
+    private setSearchTerm(searchTerm: string): void {
+        this.setState({ searchTerm });
     }
 }

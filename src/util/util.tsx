@@ -2,24 +2,22 @@ import * as hash from 'hash.js';
 import * as React from 'react';
 import { FormikTouched, Field } from 'formik';
 import { TEXTAREA_FIELD_TYPE } from './constants';
-import { AxiosError } from 'axios';
-import { isUndefined } from 'util';
 import '../css/App.css';
 
 const HEX = 'hex';
+
+export function stringValueOrEmptyString(value: string | null | undefined): string {
+    if (value === null || value === undefined) {
+        return '';
+    } else {
+        return value;
+    }
+}
 
 export function isNonEmptyString(value: any): boolean {
     return typeof value === 'string' &&
         value !== null &&
         value !== undefined;
-}
-
-export function axiosErrorToMessage(error: AxiosError): string {
-    if (isUndefined(error.response)) {
-        return error.message;
-    } else {
-        return error.response.data.message;
-    }
 }
 
 export function notify(message: any): void {

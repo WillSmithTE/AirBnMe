@@ -1,12 +1,13 @@
 import React from "react";
 import { ListingModel, SimpleListingModel, LISTINGS_API_PATH } from "../model/Listing";
-import { notifyError, axiosErrorToMessage } from "../util/util";
+import { notifyError } from "../util/util";
 import { ListingSummary } from "./ListingSummary";
 import { Container } from "reactstrap";
 import '../css/Listings.css';
-import Axios from "axios";
+import Axios, { AxiosError } from "axios";
 import { SERVER_API_PATH } from "../util/constants";
 import { isUndefined } from "util";
+import { Error } from "../model/Error";
 
 interface ListingsProps {
     searchTerm: string;
@@ -14,16 +15,29 @@ interface ListingsProps {
 
 interface ListingsState {
     listings: SimpleListingModel[];
+    pageNumber: number;
 }
 
 export class Listings extends React.Component<ListingsProps, ListingsState> {
 
     private static LISTINGS_API_PATH = SERVER_API_PATH + "/listing";
 
+    private readonly takeAmount: number = 10;
+
     constructor(props: ListingsProps) {
         super(props);
-        this.state = { listings: [] };
-        this.fetchListingSummaries(this.props.searchTerm).then(
+        this.state = { listings: [], pageNumber: 1 };
+    }
+
+    render(): JSX.Element {
+        this.updateListingSummaries();
+        return <Container className='listingsContainer'>
+            {this.state.listings.map((listing) => <ListingSummary listing={listing} key={listing.getId()} />)}
+        </Container>;
+    }
+
+    private updateListingSummaries(): void {
+        this.fetchListingSummaries().then(
             (listings: ListingModel[]) => {
                 this.setState({
                     listings: listings
@@ -31,20 +45,24 @@ export class Listings extends React.Component<ListingsProps, ListingsState> {
                         .filter((listingOrUndefined) => !isUndefined(listingOrUndefined)) as SimpleListingModel[]
                 });
             },
-            (error) => notifyError(axiosErrorToMessage(error as any))
+            (error: Error) => notifyError(error.getMessage())
         );
     }
 
-    render(): JSX.Element {
-        return <Container className='listingsContainer'>
-            {this.state.listings.map((listing) => <ListingSummary listing={listing} key={listing.getId()} />)}
-        </Container>;
-    }
-
-    private fetchListingSummaries(_searchTerm: string): Promise<ListingModel[]> {
-        return Axios.get<ListingModel[]>(`${LISTINGS_API_PATH}?skip=0&take=10`).then(
+    private fetchListingSummaries(): Promise<ListingModel[]> {
+        return Axios.get<ListingModel[]>(this.buildQueryPath()).then(
             (result) => Promise.resolve(result.data),
-            (error) => Promise.reject(axiosErrorToMessage(error))
+            (error: AxiosError) => Promise.reject(Error.fromAxiosError(error))
         );
     }
+
+    private buildQueryPath(): string {
+        return `${LISTINGS_API_PATH}?skip=${this.getSkipAmount()}&take=${this.takeAmount}&searchTerm=${this.props.searchTerm}`;
+    }
+
+    private getSkipAmount(): number {
+        const pageNumberMinusOne: number = this.state.pageNumber - 1;
+        return pageNumberMinusOne * this.takeAmount;
+    }
+
 }

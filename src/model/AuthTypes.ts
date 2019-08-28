@@ -1,5 +1,6 @@
+import Axios, { AxiosResponse, AxiosRequestConfig, AxiosError } from "axios";
 import { SERVER_API_PATH, ACCESS_TOKEN_KEY } from "../util/constants";
-import Axios, { AxiosResponse, AxiosRequestConfig } from "axios";
+import { Error } from '../model/Error';
 
 export const AUTH_API_PATH = SERVER_API_PATH + 'auth/';
 
@@ -16,7 +17,7 @@ export function postWithAuthToken(path: string, data: {}): Promise<AxiosResponse
     const authToken: string | null = localStorage.getItem(ACCESS_TOKEN_KEY);
 
     if (authToken === null) {
-        return Promise.reject(`Unable to find auth token`);
+        return Promise.reject(new Error('You have to be logged in to do that!'));
     } else {
         const postOptions: AxiosRequestConfig = {
             headers: {
@@ -24,6 +25,6 @@ export function postWithAuthToken(path: string, data: {}): Promise<AxiosResponse
                 'Content-Type': 'application/json'
             }
         };
-        return Axios.post(path, data, postOptions);
+        return Axios.post(path, data, postOptions).catch((error: AxiosError) => Promise.reject(Error.fromAxiosError(error)));
     }
 }

@@ -3,9 +3,10 @@ import axios, { AxiosError } from 'axios';
 import { Formik, Form } from "formik";
 import { RouteComponentProps } from "react-router";
 import * as Yup from 'yup';
+import { Error } from '../model/Error';
 import { RegisterRequest, AUTH_API_PATH } from "../model/AuthTypes";
 import { DEFAULT_AXIOS_POST_CONFIG, REQUIRED_TEXT, PASSWORD_FIELD_NAME, EMAIL_FIELD_NAME, CONFIRM_PASSWORD_FIELD_NAME, NAME_FIELD_NAME, STRING_FIELD_TYPE } from "../util/constants";
-import { notify, hashPassword, makeFieldAndErrors, axiosErrorToMessage } from "../util/util";
+import { notify, hashPassword, makeFieldAndErrors } from "../util/util";
 import { LOGIN_PATH } from "./App";
 
 interface RegisterFields {
@@ -70,7 +71,7 @@ export class Register extends React.Component<RouteComponentProps<{}>> {
                 notify('Registration success!');
                 this.props.history.push(LOGIN_PATH);
             },
-            (error: AxiosError) => notify('Registration failed - ' + axiosErrorToMessage(error))
+            (error: AxiosError) => notify('Registration failed - ' + Error.fromAxiosError(error).getMessage())
         );
     }
 

@@ -3,10 +3,11 @@ import * as Yup from 'yup';
 import { Formik, Form } from 'formik';
 import { REQUIRED_TEXT, NAME_FIELD_NAME, STRING_FIELD_TYPE, DESCRIPTION_FIELD_NAME, ADDRESS_FIELD_NAME, PRICE_FIELD_NAME } from '../util/constants';
 import { ListingModel, LISTINGS_API_PATH } from '../model/Listing';
-import { makeFieldAndErrors, makeTextAreaFieldAndErrors, notifyError, axiosErrorToMessage } from '../util/util';
+import { makeFieldAndErrors, makeTextAreaFieldAndErrors, notify } from '../util/util';
 import { RouteComponentProps } from 'react-router';
 import { postWithAuthToken } from '../model/AuthTypes';
 import { LISTING_PATH } from './App';
+import { Error } from '../model/Error';
 
 
 export class NewListing extends React.Component<RouteComponentProps<{}>> {
@@ -52,7 +53,7 @@ export class NewListing extends React.Component<RouteComponentProps<{}>> {
     private attemptCreateNewListing(listing: ListingModel): void {
         postWithAuthToken(NewListing.API_PATH, listing).then(
             (success) => this.props.history.push(`${LISTING_PATH}/${success.data.listingId}`),
-            (error) => notifyError(axiosErrorToMessage(error))
+            (error: Error) => notify(error.getMessage())
         );
     }
 
