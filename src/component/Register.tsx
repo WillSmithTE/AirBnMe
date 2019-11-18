@@ -5,7 +5,7 @@ import { RouteComponentProps } from "react-router";
 import * as Yup from 'yup';
 import { Error } from '../model/Error';
 import { RegisterRequest, AUTH_API_PATH } from "../model/AuthTypes";
-import { DEFAULT_AXIOS_POST_CONFIG, REQUIRED_TEXT, PASSWORD_FIELD_NAME, EMAIL_FIELD_NAME, CONFIRM_PASSWORD_FIELD_NAME, NAME_FIELD_NAME, STRING_FIELD_TYPE } from "../util/constants";
+import { DEFAULT_AXIOS_POST_CONFIG, REQUIRED, PASSWORD_FIELD_NAME, EMAIL_FIELD_NAME, CONFIRM_PASSWORD_FIELD_NAME, NAME_FIELD_NAME, STRING_FIELD_TYPE } from "../util/constants";
 import { notify, hashPassword, makeFieldAndErrors } from "../util/util";
 import { LOGIN_PATH } from "./App";
 
@@ -27,17 +27,17 @@ export class Register extends React.Component<RouteComponentProps<{}>> {
         Yup.object().shape({
             email: Yup.string()
                 .email()
-                .required(REQUIRED_TEXT),
+                .required(REQUIRED),
             password: Yup.string()
                 .min(Register.MIN_PASSWORD_LENGTH)
                 .max(Register.MAX_PASSWORD_LENGTH)
-                .required(REQUIRED_TEXT),
+                .required(REQUIRED),
             confirmPassword: Yup.string()
                 .oneOf([Yup.ref(PASSWORD_FIELD_NAME)], 'Passwords must match')
-                .required(REQUIRED_TEXT),
+                .required(REQUIRED),
             name: Yup.string()
                 .min(Register.MIN_NAME_LENGTH)
-                .required(REQUIRED_TEXT)
+                .required(REQUIRED)
         });
 
     render() {

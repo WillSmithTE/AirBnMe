@@ -1,13 +1,14 @@
 import * as React from 'react';
 import * as Yup from 'yup';
 import { Formik, Form } from 'formik';
-import { REQUIRED_TEXT, NAME_FIELD_NAME, STRING_FIELD_TYPE, DESCRIPTION_FIELD_NAME, ADDRESS_FIELD_NAME, PRICE_FIELD_NAME } from '../util/constants';
+import { REQUIRED, NAME_FIELD_NAME, STRING_FIELD_TYPE, DESCRIPTION_FIELD_NAME, ADDRESS_FIELD_NAME, PRICE_FIELD_NAME } from '../util/constants';
 import { ListingModel, LISTINGS_API_PATH } from '../model/Listing';
 import { makeFieldAndErrors, makeTextAreaFieldAndErrors, notify } from '../util/util';
 import { RouteComponentProps } from 'react-router';
 import { postWithAuthToken } from '../model/AuthTypes';
 import { LISTING_PATH } from './App';
 import { Error } from '../model/Error';
+import { DatePicker } from './DatePicker';
 
 
 export class NewListing extends React.Component<RouteComponentProps<{}>> {
@@ -19,15 +20,15 @@ export class NewListing extends React.Component<RouteComponentProps<{}>> {
     private static readonly VALIDATION_SCHEMA = Yup.object().shape({
         name: Yup.string()
             .min(NewListing.MIN_NAME_LENGTH)
-            .required(REQUIRED_TEXT),
+            .required(REQUIRED),
         address: Yup.string()
             .min(NewListing.MIN_NAME_LENGTH)
-            .required(REQUIRED_TEXT),
+            .required(REQUIRED),
         description: Yup.string()
             .min(NewListing.MIN_DESCRIPTION_LENGTH)
-            .required(REQUIRED_TEXT),
+            .required(REQUIRED),
         price: Yup.number()
-            .required(REQUIRED_TEXT)
+            .required(REQUIRED)
     });
 
     render(): JSX.Element {
@@ -47,6 +48,7 @@ export class NewListing extends React.Component<RouteComponentProps<{}>> {
                     </Form>
                 }
             </Formik>
+            <DatePicker startDateId='start' endDateId='end' />
         </div >;
     }
 

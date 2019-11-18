@@ -1,5 +1,5 @@
-export const SERVER_API_PATH = 'https://airbnme-jsonbe.herokuapp.com/';
-// export const SERVER_API_PATH = 'http://localhost:8080/';
+// export const SERVER_API_PATH = 'https://airbnme-jsonbe.herokuapp.com/';
+export const SERVER_API_PATH = 'http://localhost:8080/';
 
 export const DEFAULT_AXIOS_POST_CONFIG = {
     headers: {
@@ -9,7 +9,7 @@ export const DEFAULT_AXIOS_POST_CONFIG = {
 
 export const ACCESS_TOKEN_KEY = 'airbnmeToken';
 
-export const REQUIRED_TEXT = 'Required';
+export const REQUIRED = 'Required';
 
 export const PASSWORD_FIELD_NAME = 'password',
     CONFIRM_PASSWORD_FIELD_NAME = 'confirmPassword',
